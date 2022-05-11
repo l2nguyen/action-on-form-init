@@ -4,6 +4,8 @@ actions:
   - action_hello_world
   - validate_test_form
   - action_submit_test_form
+  # needed to subclass ValidationAction
+  - action_validate_slot_mappings
 
 intents:
   - greet
@@ -26,10 +28,19 @@ slots:
       type: from_entity
       conditions:
       - active_loop: test_form
+  form_initialized:
+    type: any
+    mappings:
+    - type: custom
+  example_slot_to_set_on_form_entry:
+    type: any
+    mappings:
+    - type: custom
 
 forms:
   test_form:
     required_slots:
+    - form_initialized
     - question1
 
 responses:
