@@ -1,0 +1,60 @@
+version: "3.1"
+
+actions:
+  - action_hello_world
+  - validate_test_form
+  - action_submit_test_form
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+entities:
+  - test_entity
+
+slots:
+  question1:
+    type: text
+    influence_conversation: false
+    mappings:
+    - entity: test_entity
+      type: from_entity
+      conditions:
+      - active_loop: test_form
+
+forms:
+  test_form:
+    required_slots:
+    - question1
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ask_test_form_question1:
+  - text: "Question 1 test form"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
