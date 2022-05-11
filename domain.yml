@@ -26,8 +26,7 @@ slots:
     mappings:
     - entity: test_entity
       type: from_entity
-      conditions:
-      - active_loop: test_form
+      intent: mood_great
   form_initialized:
     type: any
     mappings:
