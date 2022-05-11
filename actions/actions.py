@@ -79,10 +79,24 @@ class ActionHelloWorld(Action):
         return []
 
 
-class ValidateTestForm(FormValidationAction):
+class ValidateTestForm(CustomFormValidationAction):
 
     def name(self):
         return "validate_test_form"
+    
+    # extra logic to run at form initialisation
+    async def extra_run_logic(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ):
+        form_init = tracker.get_slot("form_initialized")
+        print(form_init)
+        events = await super().extra_run_logic(dispatcher, tracker, domain)
+        dispatcher.utter_message(text="I am the extra run logic and I should run at the beginning of a form!")
+        events.append(SlotSet("example_slot_to_set_on_form_entry", "value"))
+        return events
 
     def validate_question1(
             self,
