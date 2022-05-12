@@ -1,12 +1,3 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
-
-
-# This is a simple example for a custom action which utters "Hello World!"
-
 from typing import Any, Text, Dict, List
 
 import abc
@@ -91,15 +82,22 @@ class ValidateTestForm(CustomFormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ):
-        form_init = tracker.get_slot("form_initialized")
-        print(form_init)
-        events = await super().extra_run_logic(dispatcher, tracker, domain)
-        
+                
         dispatcher.utter_message(text="I am the extra run logic and I should run at the beginning of a form!")
-        # set example slot
-        events.append(SlotSet("example_slot_to_set_on_form_entry", "my_test_value"))
         
-        return events
+        # Get the value of the entity 'test_entity'
+        test_entity = next(tracker.get_latest_entity_values("test_entity", None))
+        
+        if test_entity is not None:
+            # Manually call the validation method for the slot 'question1'
+            # It returns a dict
+            validation = self.validate_question1(test_entity, dispatcher,tracker,domain)
+            value = validation.get("question1", None)
+                
+            # Tell Rasa to set the slot.
+            return [SlotSet("question1", value)] 
+        
+        return []
 
     def validate_question1(
             self,
