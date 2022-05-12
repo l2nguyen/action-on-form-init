@@ -1,5 +1,5 @@
 # action-on-form-init
-This is a simple bot in Rasa 3.1 that provides a workaround for running actions on form initialisation because form validation is now only run after the form is active. See this [issue](https://github.com/RasaHQ/rasa/issues/10913) for more details.
+This is a simple bot in Rasa 3.x that provides a workaround for running actions on form initialisation because form validation is now only run after the form is active. See this [issue](https://github.com/RasaHQ/rasa/issues/10913) for more details.
 
 This is inspired by this solution [here](https://github.com/melindaloubser1/moodbot/tree/form_initial_logic_3.x) and Rasa's [financial demo](https://github.com/RasaHQ/financial-demo/blob/main/actions/custom_forms.py).
 
