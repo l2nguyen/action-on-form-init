@@ -49,11 +49,25 @@ class CustomFormValidationAction(FormValidationAction, metaclass=abc.ABCMeta):
         return {"form_initialized": True}
 
     async def extra_run_logic(
+
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
     ):
+    """ Runs extra logic at form initialization
+
+    Args:
+        domain_slots: Names of slots of this form which were mapped in
+            the domain.
+        dispatcher: the dispatcher which is used to
+                send messages back to the user.
+        tracker: the conversation tracker for the current user.
+        domain: the bot's domain.
+
+    Returns: An empty list
+    """
+
         return []
 
 class ActionHelloWorld(Action):
@@ -84,7 +98,7 @@ class ValidateTestForm(CustomFormValidationAction):
     ):
                 
         dispatcher.utter_message(text="I am the extra run logic and I should run at the beginning of a form!")
-        
+
         # Get the value of the entity 'test_entity'
         test_entity = next(tracker.get_latest_entity_values("test_entity", None))
         
